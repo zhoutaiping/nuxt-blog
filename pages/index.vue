@@ -15,7 +15,7 @@
       >
         <NuxtLink :to="weekly._path" class="block">
           <!-- 期数和标题 -->
-          <h2 class="text-xl font-medium text-gray-900 dark:text-slate-100 mb-2 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+          <h2 class="text-xl font-medium text-gray-900 dark:text-slate-100 mb-2 transition-colors">
             {{ weekly.title }}
           </h2>
 
