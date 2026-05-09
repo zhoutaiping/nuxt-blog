@@ -2,8 +2,8 @@
   <div class="weekly-list">
     <!-- 页面标题 -->
     <div class="mb-12 text-center">
-      <h1 class="text-3xl font-semibold text-gray-900 mb-2">潮流周刊</h1>
-      <p class="text-gray-500">记录多彩生活见闻</p>
+      <h1 class="text-3xl font-semibold text-gray-900 dark:text-slate-100 mb-2">潮流周刊</h1>
+      <p class="text-gray-500 dark:text-slate-400">记录多彩生活见闻</p>
     </div>
 
     <!-- 周刊列表 -->
@@ -11,16 +11,16 @@
       <article
         v-for="weekly in weeklies"
         :key="weekly._path"
-        class="weekly-card border-b border-gray-100 pb-8 last:border-0"
+        class="weekly-card border-b border-gray-100 dark:border-slate-700 pb-8 last:border-0"
       >
         <NuxtLink :to="weekly._path" class="block">
           <!-- 期数和标题 -->
-          <h2 class="text-xl font-medium text-gray-900 mb-2 hover:text-blue-600 transition-colors">
+          <h2 class="text-xl font-medium text-gray-900 dark:text-slate-100 mb-2 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
             {{ weekly.title }}
           </h2>
 
           <!-- 发布日期 -->
-          <time class="text-sm text-gray-500 mb-3 block">
+          <time class="text-sm text-gray-500 dark:text-slate-400 mb-3 block">
             {{ formatDate(weekly.date) }}
           </time>
 
@@ -34,7 +34,7 @@
           />
 
           <!-- 简介 -->
-          <p v-if="weekly.description" class="text-gray-600 leading-relaxed">
+          <p v-if="weekly.description" class="text-gray-600 dark:text-slate-300 leading-relaxed">
             {{ weekly.description }}
           </p>
         </NuxtLink>
@@ -42,22 +42,34 @@
     </div>
 
     <!-- 空状态 -->
-    <div v-if="!weeklies || weeklies.length === 0" class="text-center py-12 text-gray-400">
+    <div v-if="!weeklies || weeklies.length === 0" class="text-center py-12 text-gray-400 dark:text-slate-500">
       <p>暂无周刊内容，请在 content/weekly/ 目录中添加 Markdown 文件</p>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
+// 周刊内容类型定义
+interface Weekly {
+  _path?: string
+  _id?: string
+  title: string
+  date: string
+  description?: string
+  cover?: string
+  tags?: string[]
+  body?: unknown
+}
+
 // 查询所有周刊内容，按日期倒序排列
-const { data: weeklies } = await useAsyncData('weeklies', () =>
-  queryContent('weekly')
+const { data: weeklies } = await useAsyncData<Weekly[]>('weeklies', () =>
+  queryContent<Weekly>('weekly')
     .sort({ date: -1 })
     .find()
 )
 
 // 格式化日期
-const formatDate = (date: string | Date) => {
+const formatDate = (date: string | Date | undefined) => {
   if (!date) return ''
   const d = new Date(date)
   return d.toLocaleDateString('zh-CN', {
@@ -75,6 +87,3 @@ useHead({
   ]
 })
 </script>
-
-<style scoped>
-</style>
