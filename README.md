@@ -6,7 +6,7 @@
 
 - **静态托管地址**: https://cloudbase-0g3dkj1pc3bdcf50-1257729872.tcloudbaseapp.com/
 - **环境 ID**: cloudbase-0g3dkj1pc3bdcf50
-- **部署时间**: 2026-05-09
+- **部署时间**: 2026-05-09 13:45
 
 ## 技术栈
 
